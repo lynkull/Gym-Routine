@@ -13,93 +13,150 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:text="Specific Workout"/>
 
-
-
         <LinearLayout
+            android:id="@+id/set1Line"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
-
             <TextView
+                android:id="@+id/set1Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Set1"/>
             <TextView
+                android:id="@+id/set1Reps"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Reps"/>
-
             <TextView
+                android:id="@+id/set1Weight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Weight"/>
-
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/set2Line"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
-
             <TextView
+                android:id="@+id/set2Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Set2"/>
             <TextView
+                android:id="@+id/set2Reps"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Reps"/>
-
             <TextView
+                android:id="@+id/set2Weight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Weight"/>
-
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/set3Line"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
-
             <TextView
+                android:id="@+id/set3Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Set3"/>
             <TextView
+                android:id="@+id/set3Reps"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Reps"/>
-
             <TextView
+                android:id="@+id/set3Weight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Weight"/>
-
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/set4Line"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:visibility="gone"
             android:orientation="horizontal">
-
             <TextView
+                android:id="@+id/set4Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Set4"/>
             <TextView
+                android:id="@+id/set4Reps"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Reps"/>
-
             <TextView
+                android:id="@+id/set4Weight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Weight"/>
-
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/set5Line"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/set5Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Set5"/>
+            <TextView
+                android:id="@+id/set5Reps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reps"/>
+            <TextView
+                android:id="@+id/set5Weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Weight"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/set6Line"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/set6Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Set6"/>
+            <TextView
+                android:id="@+id/set6Reps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reps"/>
+            <TextView
+                android:id="@+id/set6Weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Weight"/>
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:text="Name" />
 
     </LinearLayout>
 

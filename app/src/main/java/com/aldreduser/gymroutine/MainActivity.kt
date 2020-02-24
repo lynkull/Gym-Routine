@@ -17,7 +17,13 @@ nutrition tracking section
 -input body weight, calculate each nutrient
 
 maybe work with the calendar
+
+user can add more sets
+
+have simple undo functionality after user input
  */
+
+// sets 4 and up are 'gone' by default (should be shown if the user has more than 3 sets in their workout)
 
 class MainActivity : AppCompatActivity() {
 
