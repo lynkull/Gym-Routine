@@ -8,7 +8,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
         android:orientation="vertical">
 
         <TextView
@@ -67,7 +66,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:inputType="number" />
+                android:clickable="false"
+                android:gravity="center"
+                android:inputType="number"
+                android:text="1" />
 
             <EditText
                 android:id="@+id/set1Reps"
@@ -94,7 +96,10 @@
                 android:id="@+id/set2Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:clickable="false"
+                android:gravity="center"
                 android:layout_weight="1"
+                android:text="2"
                 android:inputType="number" />
 
             <EditText
@@ -122,7 +127,10 @@
                 android:id="@+id/set3Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:clickable="false"
+                android:gravity="center"
                 android:layout_weight="1"
+                android:text="3"
                 android:inputType="number" />
 
             <EditText
@@ -151,9 +159,11 @@
                 android:id="@+id/set4Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:clickable="false"
+                android:gravity="center"
                 android:layout_weight="1"
                 android:inputType="number"
-                android:text="Set4" />
+                android:text="4" />
 
             <EditText
                 android:id="@+id/set4Reps"
@@ -183,9 +193,11 @@
                 android:id="@+id/set5Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:clickable="false"
+                android:gravity="center"
                 android:layout_weight="1"
                 android:inputType="number"
-                android:text="Set5" />
+                android:text="5" />
 
             <EditText
                 android:id="@+id/set5Reps"
@@ -215,9 +227,11 @@
                 android:id="@+id/set6Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:clickable="false"
+                android:gravity="center"
                 android:layout_weight="1"
                 android:inputType="number"
-                android:text="Set6" />
+                android:text="6" />
 
             <EditText
                 android:id="@+id/set6Reps"
@@ -235,6 +249,19 @@
                 android:inputType="number"
                 android:text="Weight" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/addSetButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5sp"
+            android:layout_marginBottom="8sp"
+            android:layout_marginLeft="20sp"
+            android:layout_marginRight="280sp"
+            android:background="@color/colorPrimary"
+            android:textSize="24dp"
+            android:text="+" />
+
 
     </LinearLayout>
 
