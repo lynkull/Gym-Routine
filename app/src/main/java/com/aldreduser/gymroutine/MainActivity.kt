@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aldreduser.gymroutine.mainScreenRecycler.Adapter
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.extra_recycler_main_item.*
 
 //have a navigation bar to the left (says which workout day)
 //recyclerview says what to display in the main screen
@@ -29,6 +30,7 @@ have simple undo functionality after user input
 // sets 4 and up are 'gone' by default (should be shown if the user has more than 3 sets in their workout)
 
 class MainActivity : AppCompatActivity() {
+    // maybe put items in an arraylist inside another arraylist to make the code cleaner, to avoid so many variables
     private var workoutName:ArrayList<String> = ArrayList()
     private var set1Reps:ArrayList<Int> = ArrayList()
     private var set1Weight:ArrayList<Double> = ArrayList()
@@ -48,8 +50,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         loadData()
-        // todo: maybe put items in an arraylist inside another arraylist to make the code cleaner, to avoid so many variables
-        val adapter = Adapter(this) // need to send the rest of the arraylists
+        val adapter = Adapter(this, workoutName, set1Reps, set1Weight, set2Reps, set2Weight,
+            set3Reps, set3Weight, set4Reps, set4Weight, set5Reps, set5Weight, set6Reps, set6Weight) // need to send the rest of the arraylists
 
         mainRecycler.layoutManager = LinearLayoutManager(this)
         mainRecycler.adapter = adapter

@@ -6,4 +6,6 @@
 
     <color name="mainThemeColor">#B120F5</color>
 
+    <color name="cardviewBackground">#C3EDE3F1</color>
+
 </resources>
