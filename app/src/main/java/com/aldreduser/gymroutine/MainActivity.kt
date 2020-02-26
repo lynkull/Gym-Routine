@@ -42,13 +42,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val adapter = Adapter(this, workoutName, set1Reps, set1Weight, set2Reps, set2Weight,
-            set3Reps, set3Weight, set4Reps, set4Weight, set5Reps, set5Weight, set6Reps, set6Weight) // need to send the rest of the arraylists
-        mainRecyclerView.layoutManager = LinearLayoutManager(this)
-        mainRecyclerView.adapter = adapter
+
 
         addWorkoutButton.setOnClickListener {
             addRecycler()
+
+            val adapter = Adapter(this, workoutName, set1Reps, set1Weight, set2Reps, set2Weight,
+                set3Reps, set3Weight, set4Reps, set4Weight, set5Reps, set5Weight, set6Reps, set6Weight) // need to send the rest of the arraylists
+
+            mainRecyclerView.layoutManager = LinearLayoutManager(this)
+            mainRecyclerView.adapter = adapter
         }
     }
 
