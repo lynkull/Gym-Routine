@@ -2,16 +2,21 @@ package com.aldreduser.gymroutine
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aldreduser.gymroutine.mainScreenRecycler.Adapter
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.extra_recycler_main_item.*
+import java.lang.NullPointerException
 
 /** todo:
  * soon:
+ * - user can add workouts
  * - store user input in boxes
  * - have a navigation bar to the left (says which workout day, nutrition, maxes)
  * - play with top navigation bar
  * - user will chose the set of workouts that are displayed (ie. legs, back, chest, etc)
+ * - delete workout
  *
  * mid:
  * - have simple undo functionality after user input
@@ -24,6 +29,7 @@ import kotlinx.android.synthetic.main.activity_main.*
  *
  * maybe:
  * -maybe work with the calendar
+ * -maybe have 2 columns
  */
 
 //sets 4 and up are 'gone' by default (should be shown if the user has more than 3 sets in their workout)
@@ -42,21 +48,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-
+        makeRecycler()
         addWorkoutButton.setOnClickListener {
-            addRecycler()
-
-            val adapter = Adapter(this, workoutName, set1Reps, set1Weight, set2Reps, set2Weight,
-                set3Reps, set3Weight, set4Reps, set4Weight, set5Reps, set5Weight, set6Reps, set6Weight) // need to send the rest of the arraylists
-
-            mainRecyclerView.layoutManager = LinearLayoutManager(this)
-            mainRecyclerView.adapter = adapter
+            makeRecycler()
         }
+
     }
 
     // make data added by user input
-    private fun addRecycler() {
+    private fun addRecyclerData() {
+        addSetButton.setOnClickListener { set4Line.visibility = View.VISIBLE }
         workoutName.add("Incline Dumbell")
         set1Reps.add(3)
         set1Weight.add(25.toDouble())
@@ -70,5 +71,14 @@ class MainActivity : AppCompatActivity() {
         set5Weight.add(35.toDouble())
         set6Reps.add(3)
         set6Weight.add(35.toDouble())
+    }
+    private fun makeRecycler() {
+        addRecyclerData()
+
+        //might need to add some of these below and in a different order. Otherwise user input might not go in the right place
+        val adapter = Adapter(this, workoutName, set1Reps, set1Weight, set2Reps, set2Weight,
+            set3Reps, set3Weight, set4Reps, set4Weight, set5Reps, set5Weight, set6Reps, set6Weight)
+        mainRecyclerView.layoutManager = LinearLayoutManager(this)
+        mainRecyclerView.adapter = adapter
     }
 }

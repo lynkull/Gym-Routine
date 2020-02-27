@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.aldreduser.gymroutine.R
 import kotlinx.android.synthetic.main.extra_recycler_main_item.view.*
+import kotlinx.android.synthetic.main.extra_recycler_main_item.*
 
 class Adapter(val nContext: Context,
               val specificWorkout:ArrayList<String>,
@@ -43,5 +44,8 @@ class Adapter(val nContext: Context,
         holder.itemView.set6WeightText.setText(set6Weight.get(position).toString())
     }
 
-    public class viewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+    public class viewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+
+        viewHolder
+    }
 }
