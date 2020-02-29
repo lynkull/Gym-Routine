@@ -1,13 +1,17 @@
 package com.aldreduser.gymroutine.mainScreenRecycler
 
 import android.content.Context
+import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.aldreduser.gymroutine.R
 import kotlinx.android.synthetic.main.extra_recycler_main_item.view.*
-import kotlinx.android.synthetic.main.extra_recycler_main_item.*
+
+
+// https://stackoverflow.com/questions/24471109/recyclerview-onclick  (for multiple buttons)   'This was so hard for me to have on item click listener in the activity and '
+
 
 class Adapter(val nContext: Context,
               val specificWorkout:ArrayList<String>,
@@ -18,9 +22,63 @@ class Adapter(val nContext: Context,
               val set5Reps:ArrayList<Int>, val set5Weight:ArrayList<Double>,
               val set6Reps:ArrayList<Int>, val set6Weight:ArrayList<Double>): RecyclerView.Adapter<Adapter.viewHolder>() {
 
+
+
+    // click listener starts here
+    // i think mData is the button
+    private var mData: ArrayList<String>? = null
+    private var mOnItemClickListener: OnItemClickListener? = null
+
+    interface OnItemClickListener {
+        fun onItemClick(view: View?, position: Int)
+    }
+
+    fun MyRecyclerAdapter(itemsData: ArrayList<String?>?,
+        onItemClickListener: OnItemClickListener) {
+        mOnItemClickListener = onItemClickListener
+        mData = itemsData
+    }
+
+    // click listener ends here
+
+
+
+
+
+
+
+
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Adapter.viewHolder {
+
         val inflater = LayoutInflater.from(parent.context)
         val callForRow = inflater.inflate(R.layout.extra_recycler_main_item, parent, false)
+
+
+
+        // click listener starts here too
+        // this might not work because other things were done before the button and listener items, might need to combine them
+
+        val viewHolder = Adapter.viewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.extra_recycler_main_item, parent, false))
+
+        viewHolder.container.setOnClickListener(object : View.OnClickListener {  //container will be efined in MyViewHolder
+            override fun onClick(v: View?) {
+                mOnItemClickListener!!.onItemClick(v, viewHolder.adapterPosition)
+            }
+        })
+        viewHolder.button.setOnClickListener(object : View.OnClickListener { //button will be efined in MyViewHolder
+            override fun onClick(v: View?) {
+                //do button click work here with
+                // mData.get( viewHolder.getAdapterPosition() );
+            }
+        })
+
+        // up to here ^^^^^^^
+
+
+
         return viewHolder(callForRow)
     }
 
@@ -45,7 +103,5 @@ class Adapter(val nContext: Context,
     }
 
     public class viewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
-
-        viewHolder
     }
 }
