@@ -8,6 +8,7 @@ import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.aldreduser.gymroutine.R
+import kotlinx.android.synthetic.main.extra_recycler_main_item.view.*
 
 
 // https://stackoverflow.com/questions/24471109/recyclerview-onclick  (for multiple buttons)   'This was so hard for me to have on item click listener in the activity and '
@@ -72,7 +73,7 @@ class Adapter(val nContext: Context,
                 mOnItemClickListener!!.onItemClick(v, viewHolder.adapterPosition)
             }
         })
-        viewHolder.button.setOnClickListener(object : View.OnClickListener { //button will be efined in MyViewHolder
+        viewHolder.button.setOnClickListener(object : View.OnClickListener { //button will be efined in viewHolder
             override fun onClick(v: View?) {
                 //do button click work here with
                 // mData.get( viewHolder.getAdapterPosition() );  mdata is the demo data passed
@@ -106,11 +107,11 @@ class Adapter(val nContext: Context,
         holder.itemView.set6WeightText.setText(set6Weight.get(position).toString())
     }
 
-    class MyViewHolder(var container: View) : ViewHolder(container) {
+    class viewHolder(var container: View) : ViewHolder(container) {
         var button: Button
 
         init {
-            button = container.findViewById<View>(R.id.button) as Button
+            button = container.findViewById<View>(R.id.button) as Button   //'button' is the name of the button i want to click
         }
     }
 }
