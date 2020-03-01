@@ -53,7 +53,6 @@ class MainActivity : AppCompatActivity() {
         addWorkoutButton.setOnClickListener {
             makeRecycler()
         }
-
     }
 
     private fun makeRecycler() {
@@ -62,8 +61,10 @@ class MainActivity : AppCompatActivity() {
         //might need to add some of these below and in a different order. Otherwise user input might not go in the right place
         val adapter = Adapter(this, workoutName, set1Reps, set1Weight, set2Reps, set2Weight,
             set3Reps, set3Weight, set4Reps, set4Weight, set5Reps, set5Weight, set6Reps, set6Weight,
-            Adapter.OnItemClickListener {
-                
+            object: Adapter.OnItemClickListener {
+                override fun onItemClick(view: View?, position: Int) {
+                    // list item was clicked
+                }
             }
         )
         mainRecyclerView.layoutManager = LinearLayoutManager(this)

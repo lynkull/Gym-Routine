@@ -1,13 +1,13 @@
 package com.aldreduser.gymroutine.mainScreenRecycler
 
 import android.content.Context
-import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.aldreduser.gymroutine.R
-import kotlinx.android.synthetic.main.extra_recycler_main_item.view.*
 
 
 // https://stackoverflow.com/questions/24471109/recyclerview-onclick  (for multiple buttons)   'This was so hard for me to have on item click listener in the activity and '
@@ -20,7 +20,11 @@ class Adapter(val nContext: Context,
               val set3Reps:ArrayList<Int>, val set3Weight:ArrayList<Double>,
               val set4Reps:ArrayList<Int>, val set4Weight:ArrayList<Double>,
               val set5Reps:ArrayList<Int>, val set5Weight:ArrayList<Double>,
-              val set6Reps:ArrayList<Int>, val set6Weight:ArrayList<Double>): RecyclerView.Adapter<Adapter.viewHolder>() {
+              val set6Reps:ArrayList<Int>, val set6Weight:ArrayList<Double>,
+
+              val onItemClickListener: OnItemClickListener
+
+              ): RecyclerView.Adapter<Adapter.viewHolder>() {
 
 
 
@@ -33,8 +37,8 @@ class Adapter(val nContext: Context,
         fun onItemClick(view: View?, position: Int)
     }
 
-    fun MyRecyclerAdapter(itemsData: ArrayList<String?>?,
-        onItemClickListener: OnItemClickListener) {
+    // delete itemsData. this is the example data being passed to the recyclerview
+    fun MyRecyclerAdapter(itemsData: ArrayList<String?>?) {
         mOnItemClickListener = onItemClickListener
         mData = itemsData
     }
@@ -71,7 +75,7 @@ class Adapter(val nContext: Context,
         viewHolder.button.setOnClickListener(object : View.OnClickListener { //button will be efined in MyViewHolder
             override fun onClick(v: View?) {
                 //do button click work here with
-                // mData.get( viewHolder.getAdapterPosition() );
+                // mData.get( viewHolder.getAdapterPosition() );  mdata is the demo data passed
             }
         })
 
@@ -102,6 +106,11 @@ class Adapter(val nContext: Context,
         holder.itemView.set6WeightText.setText(set6Weight.get(position).toString())
     }
 
-    public class viewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+    class MyViewHolder(var container: View) : ViewHolder(container) {
+        var button: Button
+
+        init {
+            button = container.findViewById<View>(R.id.button) as Button
+        }
     }
 }
