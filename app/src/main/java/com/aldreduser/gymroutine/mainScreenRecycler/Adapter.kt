@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.extra_recycler_main_item.view.*
 
 
 // https://stackoverflow.com/questions/24471109/recyclerview-onclick  (for multiple buttons)   'This was so hard for me to have on item click listener in the activity and '
-
+//todo: fix 2 errors. Then make my idea work with recycler view with different onclick widgets and events.
 
 class Adapter(val nContext: Context,
               val specificWorkout:ArrayList<String>,
