@@ -1,13 +1,12 @@
-package com.aldreduser.gymroutine
+package com.aldreduser.gymroutine.mainScreen
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.aldreduser.gymroutine.mainScreenRecycler.Adapter
+import com.aldreduser.gymroutine.R
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.extra_recycler_main_item.*
-import java.lang.NullPointerException
 
 /** todo:
  * soon:
@@ -87,5 +86,4 @@ class MainActivity : AppCompatActivity() {
         set6Reps.add(3)
         set6Weight.add(35.toDouble())
     }
-
 }

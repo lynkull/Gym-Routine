@@ -1,9 +1,9 @@
 package com.aldreduser.gymroutine.components
 
-class workouts {
+class Workouts {
     // might not need this
 
-    var workoutName = List<String>
+    //var workoutName = List<String>
 
     class workout {
         var weight = 0 //array inside array inside array

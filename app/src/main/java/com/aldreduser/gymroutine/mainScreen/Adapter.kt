@@ -1,4 +1,4 @@
-package com.aldreduser.gymroutine.mainScreenRecycler
+package com.aldreduser.gymroutine.mainScreen
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -45,14 +45,6 @@ class Adapter(val nContext: Context,
     }
 
     // click listener ends here
-
-
-
-
-
-
-
-
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Adapter.viewHolder {
