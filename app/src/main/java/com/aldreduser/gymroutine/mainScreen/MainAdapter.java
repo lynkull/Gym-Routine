@@ -1,5 +1,6 @@
 package com.aldreduser.gymroutine.mainScreen;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,9 +19,11 @@ import java.util.ArrayList;
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     private static final String TAG = "MainAdapter";
-    private ArrayList<String> mSpecificWorkout = new ArrayList<>();
+    private ArrayList<String> mSpecificWorkout;
+    private Context activityContext;
 
-    public MainAdapter (ArrayList<String> individualWorkout) {
+    public MainAdapter (Context activityContext, ArrayList<String> individualWorkout) {
+        this.activityContext = activityContext;
         this.mSpecificWorkout = individualWorkout;
     }
 
@@ -28,8 +32,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     public MainAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //inflates the view
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.extra_recycler_main_item, parent, false);
-        ViewHolder holder = new ViewHolder(view);
-        return holder;
+        return new ViewHolder(view);
     }
 
     @Override
@@ -48,13 +51,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         //ViewHolder holds the widgets in memory of each entry
 
         //all the widgets are declared here
-        //todo: I have to add more widgets. And more sets can be added by the user, might have to make an arrayList of EditText
-        //  (or just declare all of them here) (sets 4 to 6 already exist in the layout, they're just hidden ->  visibility='gone')
         TextView specificWorkoutText;
         EditText set1RepsText, set2RepsText, set3RepsText, set1WeightText, set2WeightText, set3WeightText;
         EditText set4RepsText, set5RepsText, set6RepsText, set4WeightText, set5WeightText, set6WeightText;
         LinearLayout set4Line, set5Line, set6Line;
-        Button addSetButton;
+        Button addSetButton, saveButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -78,13 +79,30 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
             set6Line = itemView.findViewById(R.id.set6Line);
             // add set button. To add more set widgets
             addSetButton = itemView.findViewById(R.id.addSetButton);
+            saveButton = itemView.findViewById(R.id.saveButton);
 
-            //todo: onclicklisteners go here
+            //todo: onClickListeners go here
+            //if this view is 'gone', make it 'visible'
+            addSetButton.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    if (set4Line.getVisibility() == View.GONE){
+                        set4Line.setVisibility(View.VISIBLE);
+                    } else if (set5Line.getVisibility() == View.GONE){
+                        set5Line.setVisibility(View.VISIBLE);
+                    } else if (set6Line.getVisibility() == View.GONE){
+                        set6Line.setVisibility(View.VISIBLE);
+                    } else {
+                        //todo: the toast might not work bc of the context
+                        Toast toast = Toast.makeText(activityContext, "Maximum sets reached.", Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                }
+            });
+            //todo: get the data in each input box and save them in shared preference in MainActivity, then in SQLite
         }
 
         @Override
         public void onClick(View v) {
-
         }
     }
 }

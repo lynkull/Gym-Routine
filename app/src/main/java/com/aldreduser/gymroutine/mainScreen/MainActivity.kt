@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.extra_recycler_main_item.*
  * - play with top navigation bar
  * - user will chose the set of workouts that are displayed (ie. legs, back, chest, etc)
  * - delete workout
+ * - probably have a table layout in each item
  *
  * mid:
  * - have simple undo functionality after user input
