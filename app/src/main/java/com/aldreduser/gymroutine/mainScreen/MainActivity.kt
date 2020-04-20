@@ -69,7 +69,8 @@ class MainActivity : AppCompatActivity() {
         mainRecyclerView.layoutManager = LinearLayoutManager(this)
         mainRecyclerView.adapter = adapter
     }
-    // make data added by user input
+
+    //todo: make data be added by user input
     private fun addRecyclerData() {
         addSetButton.setOnClickListener { set4Line.visibility = View.VISIBLE }
         workoutName.add("Incline Dumbell")

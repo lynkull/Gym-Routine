@@ -22,16 +22,11 @@ class Adapter(val nContext: Context,
               val set4Reps:ArrayList<Int>, val set4Weight:ArrayList<Double>,
               val set5Reps:ArrayList<Int>, val set5Weight:ArrayList<Double>,
               val set6Reps:ArrayList<Int>, val set6Weight:ArrayList<Double>,
-
               val onItemClickListener: OnItemClickListener
-
               ): RecyclerView.Adapter<Adapter.viewHolder>() {
 
-
-
-    // click listener starts here
     // i think mData is the button
-    private var mData: ArrayList<String>? = null
+    private var mData: ArrayList<String?>? = null
     private var mOnItemClickListener: OnItemClickListener? = null
 
     interface OnItemClickListener {
@@ -44,18 +39,14 @@ class Adapter(val nContext: Context,
         mData = itemsData
     }
 
-    // click listener ends here
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Adapter.viewHolder {
 
         val inflater = LayoutInflater.from(parent.context)
         val callForRow = inflater.inflate(R.layout.extra_recycler_main_item, parent, false)
 
-
-
         // click listener starts here too
         // this might not work because other things were done before the button and listener items, might need to combine them
+        //todo: move this click listeners to the viewholder
 
         val viewHolder = Adapter.viewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.extra_recycler_main_item, parent, false))
@@ -74,16 +65,11 @@ class Adapter(val nContext: Context,
 
         // up to here ^^^^^^^
 
-
-
         return viewHolder(callForRow)
     }
 
-    override fun getItemCount(): Int {
-        return specificWorkout.size
-    }
-
     override fun onBindViewHolder(holder: viewHolder, position: Int) {
+
         holder.itemView.specificWorkoutText.text = specificWorkout.get(position)
         holder.itemView.set1RepsText.setText(set1Reps.get(position).toString())
         holder.itemView.set1WeightText.setText(set1Weight.get(position).toString()) //make widgets take decimals in the layout
@@ -99,11 +85,15 @@ class Adapter(val nContext: Context,
         holder.itemView.set6WeightText.setText(set6Weight.get(position).toString())
     }
 
+    override fun getItemCount(): Int {
+        return specificWorkout.size
+    }
+
     class viewHolder(var container: View) : ViewHolder(container) {
         var button: Button
 
         init {
-            button = container.findViewById<View>(R.id.button) as Button   //'button' is the name of the button i want to click
+            button = container.findViewById<View>(R.id.addSetButton) as Button   //'button' is the name of the button i want to click
         }
     }
 }
