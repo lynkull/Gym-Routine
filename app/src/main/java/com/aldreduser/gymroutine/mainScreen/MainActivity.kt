@@ -6,7 +6,6 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aldreduser.gymroutine.R
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.extra_recycler_main_item.*
 
 /** todo:
  * soon:
@@ -35,7 +34,7 @@ import kotlinx.android.synthetic.main.extra_recycler_main_item.*
 
 //sets 4 and up are 'gone' by default (should be shown if the user has more than 3 sets in their workout)
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
     // maybe put items in an arraylist inside another arraylist to make the code cleaner, to avoid so many variables
     private var workoutName:ArrayList<String> = ArrayList()
     private var set1Reps:ArrayList<Int> = ArrayList(); private var set1Weight:ArrayList<Double> = ArrayList()
@@ -56,7 +55,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun makeRecycler() {
-        addRecyclerData()
+        //addRecyclerData()
 
         //might need to add some of these below and in a different order. Otherwise user input might not go in the right place
         val adapter = Adapter(this, workoutName, set1Reps, set1Weight, set2Reps, set2Weight,
@@ -71,21 +70,28 @@ class MainActivity : AppCompatActivity() {
         mainRecyclerView.adapter = adapter
     }
 
-    //todo: make data be added by user input
-    private fun addRecyclerData() {
-        addSetButton.setOnClickListener { set4Line.visibility = View.VISIBLE }
-        workoutName.add("Incline Dumbell")
-        set1Reps.add(3)
-        set1Weight.add(25.toDouble())
-        set2Reps.add(3)
-        set2Weight.add(30.toDouble())
-        set3Reps.add(3)
-        set3Weight.add(35.toDouble())
-        set4Reps.add(3)
-        set4Weight.add(35.toDouble())
-        set5Reps.add(3)
-        set5Weight.add(35.toDouble())
-        set6Reps.add(3)
-        set6Weight.add(35.toDouble())
+    //todo: handle save data onLick events from MainAdapter here (look at best practice way click listener youtube video)
+    override fun onNoteClick(position: Int /*<other parameters>*/) {
+        //todo: use clicklisteners here
+        //pass all the data to be saved from the adapter to here as parameters. Save the under the position
     }
+
+
+//    // make data be added by user input
+//    private fun addRecyclerData() {
+//        addSetButton.setOnClickListener { set4Line.visibility = View.VISIBLE }
+//        workoutName.add("Incline Dumbell")
+//        set1Reps.add(3)
+//        set1Weight.add(25.toDouble())
+//        set2Reps.add(3)
+//        set2Weight.add(30.toDouble())
+//        set3Reps.add(3)
+//        set3Weight.add(35.toDouble())
+//        set4Reps.add(3)
+//        set4Weight.add(35.toDouble())
+//        set5Reps.add(3)
+//        set5Weight.add(35.toDouble())
+//        set6Reps.add(3)
+//        set6Weight.add(35.toDouble())
+//    }
 }

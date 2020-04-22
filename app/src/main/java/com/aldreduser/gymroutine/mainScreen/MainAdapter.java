@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.aldreduser.gymroutine.R;
@@ -18,13 +17,15 @@ import java.util.ArrayList;
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
+    private OnSaveButListener mOnSaveButListener;
     private static final String TAG = "MainAdapter";
     private ArrayList<String> mSpecificWorkout;
     private Context activityContext;
 
-    public MainAdapter (Context activityContext, ArrayList<String> individualWorkout) {
+    public MainAdapter (Context activityContext, ArrayList<String> individualWorkout, OnSaveButListener onSaveButListener) {
         this.activityContext = activityContext;
         this.mSpecificWorkout = individualWorkout;
+        this.mOnSaveButListener = onSaveButListener;
     }
 
     @NonNull
@@ -32,7 +33,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     public MainAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         //inflates the view
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.extra_recycler_main_item, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, mOnSaveButListener);
     }
 
     @Override
@@ -50,6 +51,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         //ViewHolder holds the widgets in memory of each entry
 
+        //click listener to senc to activity that will handle this event
+        OnSaveButListener onSaveButListener;
         //all the widgets are declared here
         TextView specificWorkoutText;
         EditText set1RepsText, set2RepsText, set3RepsText, set1WeightText, set2WeightText, set3WeightText;
@@ -57,8 +60,10 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         LinearLayout set4Line, set5Line, set6Line;
         Button addSetButton, saveButton;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, OnSaveButListener onSaveButListener) {
             super(itemView);
+            this.onSaveButListener = onSaveButListener;
+
             specificWorkoutText = itemView.findViewById(R.id.specificWorkoutText);
             //reps and weights widgets, to write and save data
             set1RepsText = itemView.findViewById(R.id.set1RepsText);
@@ -81,7 +86,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
             addSetButton = itemView.findViewById(R.id.addSetButton);
             saveButton = itemView.findViewById(R.id.saveButton);
 
-            //todo: onClickListeners go here
+            //onClickListeners go here
             //if this view is 'gone', make it 'visible'
             addSetButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
@@ -92,17 +97,25 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                     } else if (set6Line.getVisibility() == View.GONE){
                         set6Line.setVisibility(View.VISIBLE);
                     } else {
-                        //todo: the toast might not work bc of the context
+                        //todo: the toast might not work bc of the context being passed
                         Toast toast = Toast.makeText(activityContext, "Maximum sets reached.", Toast.LENGTH_SHORT);
                         toast.show();
                     }
                 }
             });
             //todo: get the data in each input box and save them in shared preference in MainActivity, then in SQLite
+            // -have the OnClickListener in MainActivity
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
+            //todo: pass all the other parameters through here too
+            onSaveButListener.onSaveClick(getAdapterPosition());
         }
+    }
+    public interface OnSaveButListener {
+        //this interface was made so that the activity class can handle onclicklisteners from here
+        void onSaveClick(int position);
     }
 }
