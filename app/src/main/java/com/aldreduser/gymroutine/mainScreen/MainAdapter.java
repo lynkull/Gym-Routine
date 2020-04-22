@@ -21,6 +21,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     private static final String TAG = "MainAdapter";
     private ArrayList<String> mSpecificWorkout;
     private Context activityContext;
+    private ArrayList<String> setReps, setWeight; //this will be used to send data to the Activity to save it
 
     public MainAdapter (Context activityContext, ArrayList<String> individualWorkout, OnSaveButListener onSaveButListener) {
         this.activityContext = activityContext;
@@ -55,8 +56,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         OnSaveButListener onSaveButListener;
         //all the widgets are declared here
         TextView specificWorkoutText;
-        EditText set1RepsText, set2RepsText, set3RepsText, set1WeightText, set2WeightText, set3WeightText;
-        EditText set4RepsText, set5RepsText, set6RepsText, set4WeightText, set5WeightText, set6WeightText;
+        EditText set1RepsText, set2RepsText, set3RepsText, set4RepsText, set5RepsText, set6RepsText;
+        EditText set1WeightText, set2WeightText, set3WeightText, set4WeightText, set5WeightText, set6WeightText;
         LinearLayout set4Line, set5Line, set6Line;
         Button addSetButton, saveButton;
 
@@ -104,18 +105,41 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                 }
             });
             //todo: get the data in each input box and save them in shared preference in MainActivity, then in SQLite
-            // -have the OnClickListener in MainActivity
+            // have to fill both arrays with values 'setReps', 'setWeigh'
+            saveButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    putUserInputInArrays();
+                }
+            });
+
             itemView.setOnClickListener(this);
+        }
+
+        private void putUserInputInArrays() {
+            setReps.add(set1RepsText.toString());
+            setReps.add(set2RepsText.toString());
+            setReps.add(set3RepsText.toString());
+            setReps.add(set4RepsText.toString());
+            setReps.add(set5RepsText.toString());
+            setReps.add(set6RepsText.toString());
+            setWeight.add(set1WeightText.toString());
+            setWeight.add(set2WeightText.toString());
+            setWeight.add(set3WeightText.toString());
+            setWeight.add(set4WeightText.toString());
+            setWeight.add(set5WeightText.toString());
+            setWeight.add(set6WeightText.toString());
         }
 
         @Override
         public void onClick(View v) {
             //todo: pass all the other parameters through here too
-            onSaveButListener.onSaveClick(getAdapterPosition());
+            onSaveButListener.onSaveClick(getAdapterPosition(), setReps, setWeight);
         }
     }
     public interface OnSaveButListener {
         //this interface was made so that the activity class can handle onclicklisteners from here
-        void onSaveClick(int position);
+        void onSaveClick(int position, ArrayList<String> setReps, ArrayList<String> setWeight);
     }
 }
+//todo: i think the full arrays are being sent, just need to recieve them and save them in MainActivity

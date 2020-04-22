@@ -2,10 +2,11 @@ package com.aldreduser.gymroutine.mainScreen
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aldreduser.gymroutine.R
 import kotlinx.android.synthetic.main.activity_main.*
+
+//everything will be saved in sharedPreferences under the position in the recyclerview
 
 /** todo:
  * soon:
@@ -36,7 +37,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
     // maybe put items in an arraylist inside another arraylist to make the code cleaner, to avoid so many variables
-    private var workoutName:ArrayList<String> = ArrayList()
+    private var workoutNames:ArrayList<String> = ArrayList()
     private var set1Reps:ArrayList<Int> = ArrayList(); private var set1Weight:ArrayList<Double> = ArrayList()
     private var set2Reps:ArrayList<Int> = ArrayList(); private var set2Weight:ArrayList<Double> = ArrayList()
     private var set3Reps:ArrayList<Int> = ArrayList(); private var set3Weight:ArrayList<Double> = ArrayList()
@@ -56,22 +57,24 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
 
     private fun makeRecycler() {
         //addRecyclerData()
-
-        //might need to add some of these below and in a different order. Otherwise user input might not go in the right place
-        val adapter = Adapter(this, workoutName, set1Reps, set1Weight, set2Reps, set2Weight,
-            set3Reps, set3Weight, set4Reps, set4Weight, set5Reps, set5Weight, set6Reps, set6Weight,
-            object: Adapter.OnItemClickListener {
-                override fun onItemClick(view: View?, position: Int) {
-                    // list item was clicked
-                }
-            }
-        )
+        val adapter = MainAdapter(this, workoutNames, this)
         mainRecyclerView.layoutManager = LinearLayoutManager(this)
         mainRecyclerView.adapter = adapter
+
+//        val adapter = Adapter(this, workoutName, set1Reps, set1Weight, set2Reps, set2Weight,
+//            set3Reps, set3Weight, set4Reps, set4Weight, set5Reps, set5Weight, set6Reps, set6Weight,
+//            object: Adapter.OnItemClickListener {
+//                override fun onItemClick(view: View?, position: Int) {
+//                    // list item was clicked
+//                }
+//            }
+//        )
+//        mainRecyclerView.layoutManager = LinearLayoutManager(this)
+//        mainRecyclerView.adapter = adapter
     }
 
     //todo: handle save data onLick events from MainAdapter here (look at best practice way click listener youtube video)
-    override fun onNoteClick(position: Int /*<other parameters>*/) {
+    override fun onSaveClick(position: Int) {
         //todo: use clicklisteners here
         //pass all the data to be saved from the adapter to here as parameters. Save the under the position
     }
