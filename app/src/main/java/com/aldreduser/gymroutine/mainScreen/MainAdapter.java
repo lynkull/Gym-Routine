@@ -19,13 +19,14 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     private OnSaveButListener mOnSaveButListener;
     private static final String TAG = "MainAdapter";
-    private ArrayList<String> mSpecificWorkout;
+    private Integer numOfWorkouts;
     private Context activityContext;
     private ArrayList<String> setReps, setWeight; //this will be used to send data to the Activity to save it
+    private String workoutName;
 
-    public MainAdapter (Context activityContext, ArrayList<String> individualWorkout, OnSaveButListener onSaveButListener) {
+    public MainAdapter (Context activityContext, Integer numOfWorkouts, OnSaveButListener onSaveButListener) {
         this.activityContext = activityContext;
-        this.mSpecificWorkout = individualWorkout;
+        this.numOfWorkouts = numOfWorkouts;
         this.mOnSaveButListener = onSaveButListener;
     }
 
@@ -46,7 +47,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     @Override
     public int getItemCount() {
         // how many list items are in the recyclerView
-        return mSpecificWorkout.size();
+        return numOfWorkouts;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -117,6 +118,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         }
 
         private void putUserInputInArrays() {
+            workoutName = specificWorkoutText.getText().toString();
             setReps.add(set1RepsText.toString());
             setReps.add(set2RepsText.toString());
             setReps.add(set3RepsText.toString());
@@ -134,12 +136,12 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         @Override
         public void onClick(View v) {
             //todo: pass all the other parameters through here too
-            onSaveButListener.onSaveClick(getAdapterPosition(), setReps, setWeight);
+            onSaveButListener.onSaveClick(getAdapterPosition(), workoutName, setReps, setWeight);
         }
     }
     public interface OnSaveButListener {
         //this interface was made so that the activity class can handle onclicklisteners from here
-        void onSaveClick(int position, ArrayList<String> setReps, ArrayList<String> setWeight);
+        void onSaveClick(int position, String workoutName, ArrayList<String> setReps, ArrayList<String> setWeight);
     }
 }
 //todo: i think the full arrays are being sent, just need to recieve them and save them in MainActivity

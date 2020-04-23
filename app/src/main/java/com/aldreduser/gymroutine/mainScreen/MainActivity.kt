@@ -3,6 +3,7 @@ package com.aldreduser.gymroutine.mainScreen
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aldreduser.gymroutine.R
 import kotlinx.android.synthetic.main.activity_main.*
@@ -40,11 +41,12 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
 
     //Shared Preferences Keys ("$position $key")
-    private val NUMB_OF_RECYCLER_VIEWS_SPK = "Number of recycler views"
+    private val NUMB_OF_RECYCLER_VIEWS_SPK = "Workout names array"
     private val SET_REPS_SPK = "Reps of set"        //"$position $SET_REPS_SPK $numOfSet"
     private val SET_WEIGHT_SPK = "Weight of set"
 
-    private var workoutNames:ArrayList<String> = ArrayList()
+    private var workoutNames:ArrayList<String> = ArrayList()  //will be used to load saved data
+    private var numOfWorkouts: Int = 0      // will be used to determine count of recycler items and to load saved data
 
 // maybe put items in an arrayList inside another arrayList to make the code cleaner, to avoid so many variables
 //    private var set1Reps:ArrayList<Int> = ArrayList(); private var set1Weight:ArrayList<Double> = ArrayList()
@@ -60,13 +62,14 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
 
         makeRecycler()
         addWorkoutButton.setOnClickListener {
+            numOfWorkouts++
             makeRecycler()
         }
     }
 
     private fun makeRecycler() {
         //addRecyclerData()
-        val adapter = MainAdapter(this, workoutNames, this)
+        val adapter = MainAdapter(this, numOfWorkouts, this)
         mainRecyclerView.layoutManager = LinearLayoutManager(this)
         mainRecyclerView.adapter = adapter
 
@@ -83,12 +86,17 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
     }
 
     //todo: handle save data onLick events from MainAdapter here (look at best practice way click listener youtube video)
-    override fun onSaveClick(position: Int, setReps: ArrayList<String>, setWeight: ArrayList<String>) {
-        //todo: handle click events here
-        //pass all the data to be saved from the adapter to here as parameters. Save the under the position
+    override fun onSaveClick(position: Int, workoutName: String, setReps: ArrayList<String>, setWeight: ArrayList<String>) {
+        //handle click events here
 
-        //todo: setReps.size and setWeight.size might be bugs, hopefully it starts at 0 and ends in setReps.size-1
-        for (i in 0..setReps.size) {
+        //all the data to be saved from the adapter is passed to here as parameters. Are saved under the position
+        //todo: setReps.size and setWeight.size might be bugs, hopefully it starts at 1 and ends in setReps.size-1
+        val workoutNameSP = this.getPreferences(Context.MODE_PRIVATE) ?: return
+        with(workoutNameSP.edit()) {
+            putString("$position $NUMB_OF_RECYCLER_VIEWS_SPK", workoutName)
+            commit()
+        }
+        for (i in 0 until setReps.size) {
             //save
             val numOfSet = i+1
             val repsSharedPref = this.getPreferences(Context.MODE_PRIVATE) ?: return
@@ -97,7 +105,7 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
                 commit()
             }
         }
-        for (i in 0..setWeight.size) {
+        for (i in 0 until setWeight.size) {
             //save
             val numOfSet = i+1
             val weightSharedPref = this.getPreferences(Context.MODE_PRIVATE) ?: return
@@ -106,29 +114,41 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
                 commit()
             }
         }
-
-        //addRecyclerData()   //display the date from memory (maybe)
+        Toast.makeText(this, "Saved", Toast.LENGTH_LONG).show()
     }
 
 
     //todo: load the saved data like this
-//    // make data be added by user input
-//    private fun addRecyclerData() {
-//        addSetButton.setOnClickListener { set4Line.visibility = View.VISIBLE }
-//        workoutName.add("Incline Dumbbell")
-//        set1Reps.add(3)
-//        set1Weight.add(25.toDouble())
-//        set2Reps.add(3)
-//        set2Weight.add(30.toDouble())
-//        set3Reps.add(3)
-//        set3Weight.add(35.toDouble())
-//        set4Reps.add(3)
-//        set4Weight.add(35.toDouble())
-//        set5Reps.add(3)
-//        set5Weight.add(35.toDouble())
-//        set6Reps.add(3)
-//        set6Weight.add(35.toDouble())
-//    }
+    private fun loadRecyclersData() {
+
+        val workoutNameSP = this.getPreferences(Context.MODE_PRIVATE) ?: return
+        workoutNameSP.getString("$position $NUMB_OF_RECYCLER_VIEWS_SPK", "")
+
+        for (i in 1..NUMB_OF_RECYCLER_VIEWS_SPK)
+
+        for loop NUMB_OF_RECYCLER_VIEWS_SPK
+
+
+        addSetButton.setOnClickListener { set4Line.visibility = View.VISIBLE }
+        workoutName.add("Incline Dumbbell")
+        set1Reps.add(3)
+        set1Weight.add(25.toDouble())
+        set2Reps.add(3)
+        set2Weight.add(30.toDouble())
+        set3Reps.add(3)
+        set3Weight.add(35.toDouble())
+        set4Reps.add(3)
+        set4Weight.add(35.toDouble())
+        set5Reps.add(3)
+        set5Weight.add(35.toDouble())
+        set6Reps.add(3)
+        set6Weight.add(35.toDouble())
+
+
+    }
+    private fun addRecyclerItem(){
+
+    }
 }
 
 //val thisActSharedPref = this.getPreferences(Context.MODE_PRIVATE) ?: return
