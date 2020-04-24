@@ -3,10 +3,12 @@ package com.aldreduser.gymroutine.mainScreen
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aldreduser.gymroutine.R
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.extra_recycler_main_item.*
 
 //everything will be saved in sharedPreferences under the position in the recyclerview
 
@@ -15,11 +17,10 @@ import kotlinx.android.synthetic.main.activity_main.*
  * - when a new view is created, user has to input the name of the workout in a popup
  * - user can add workouts (might not work yet)
  * - store user input in boxes
+ * - delete workout
+ * - user will chose the set of workouts that are displayed (ie. legs, back, chest, etc)
  * - have a navigation bar to the left (says which workout day, nutrition, maxes)
  * - play with top navigation bar
- * - user will chose the set of workouts that are displayed (ie. legs, back, chest, etc)
- * - delete workout
- * - probably have a table layout in each item
  *
  * mid:
  * - have simple undo functionality after user input
@@ -31,8 +32,8 @@ import kotlinx.android.synthetic.main.activity_main.*
  * - input body weight, calculate each nutrient needed
  *
  * maybe:
+ * - probably have a table layout in each item
  * -maybe work with the calendar
- * -maybe have 2 columns
  * -save user input dynamically
  */
 
@@ -41,6 +42,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
 
     //Shared Preferences Keys ("$position $key")
+    private val NUMB_OF_WORKOUTS_SPK = "Number of workouts"
     private val NUMB_OF_RECYCLER_VIEWS_SPK = "Workout names array"
     private val SET_REPS_SPK = "Reps of set"        //"$position $SET_REPS_SPK $numOfSet"
     private val SET_WEIGHT_SPK = "Weight of set"
@@ -49,6 +51,9 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
     private var numOfWorkouts: Int = 0      // will be used to determine count of recycler items and to load saved data
 
 // maybe put items in an arrayList inside another arrayList to make the code cleaner, to avoid so many variables
+    //todo: send these to MainAdapter like it was sent to Adapter. Having an arrayList for each one was probably unnecessary
+    private var setRepsArray:ArrayList<ArrayList<Int>> = ArrayList()
+    private var setWeightArray:ArrayList<ArrayList<Double>> = ArrayList()
 //    private var set1Reps:ArrayList<Int> = ArrayList(); private var set1Weight:ArrayList<Double> = ArrayList()
 //    private var set2Reps:ArrayList<Int> = ArrayList(); private var set2Weight:ArrayList<Double> = ArrayList()
 //    private var set3Reps:ArrayList<Int> = ArrayList(); private var set3Weight:ArrayList<Double> = ArrayList()
@@ -84,13 +89,15 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
 //        mainRecyclerView.layoutManager = LinearLayoutManager(this)
 //        mainRecyclerView.adapter = adapter
     }
-
-    //todo: handle save data onLick events from MainAdapter here (look at best practice way click listener youtube video)
+    //handle recycler items click events here
     override fun onSaveClick(position: Int, workoutName: String, setReps: ArrayList<String>, setWeight: ArrayList<String>) {
-        //handle click events here
-
         //all the data to be saved from the adapter is passed to here as parameters. Are saved under the position
         //todo: setReps.size and setWeight.size might be bugs, hopefully it starts at 1 and ends in setReps.size-1
+        val numbOfWorkoutsSP = this.getPreferences(Context.MODE_PRIVATE) ?: return
+        with(numbOfWorkoutsSP.edit()) {
+            putInt(NUMB_OF_WORKOUTS_SPK, numOfWorkouts)
+            commit()
+        }
         val workoutNameSP = this.getPreferences(Context.MODE_PRIVATE) ?: return
         with(workoutNameSP.edit()) {
             putString("$position $NUMB_OF_RECYCLER_VIEWS_SPK", workoutName)
@@ -117,36 +124,44 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
         Toast.makeText(this, "Saved", Toast.LENGTH_LONG).show()
     }
 
-
-    //todo: load the saved data like this
+    //load the saved data like this
     private fun loadRecyclersData() {
+        //todo: numOfWorkouts might be more than the workouts, ask if it exists when iterating to avoid a crash (or try catch block)
 
-        val workoutNameSP = this.getPreferences(Context.MODE_PRIVATE) ?: return
-        workoutNameSP.getString("$position $NUMB_OF_RECYCLER_VIEWS_SPK", "")
+        val numbOfWorkoutsSP = this.getPreferences(Context.MODE_PRIVATE) ?: return
+        numOfWorkouts =  numbOfWorkoutsSP.getInt(NUMB_OF_WORKOUTS_SPK, 0)
 
-        for (i in 1..NUMB_OF_RECYCLER_VIEWS_SPK)
+        for (i in 0 until  numOfWorkouts) {
+            //todo: maybe put this in try catch
 
-        for loop NUMB_OF_RECYCLER_VIEWS_SPK
+            val workoutNameSP = this.getPreferences(Context.MODE_PRIVATE) ?: return
+            workoutNames.add(workoutNameSP.getString("$i $NUMB_OF_RECYCLER_VIEWS_SPK", "")!!)
 
+            //todo: fill the up with saved data and create a recycler item
+            setRepsArray.add()
+            setWeightArray.add()
 
-        addSetButton.setOnClickListener { set4Line.visibility = View.VISIBLE }
-        workoutName.add("Incline Dumbbell")
-        set1Reps.add(3)
-        set1Weight.add(25.toDouble())
-        set2Reps.add(3)
-        set2Weight.add(30.toDouble())
-        set3Reps.add(3)
-        set3Weight.add(35.toDouble())
-        set4Reps.add(3)
-        set4Weight.add(35.toDouble())
-        set5Reps.add(3)
-        set5Weight.add(35.toDouble())
-        set6Reps.add(3)
-        set6Weight.add(35.toDouble())
+        }
 
 
-    }
-    private fun addRecyclerItem(){
+
+
+
+//        addSetButton.setOnClickListener { set4Line.visibility = View.VISIBLE }
+//        workoutName.add("Incline Dumbbell")
+//        set1Reps.add(3)
+//        set2Reps.add(3)
+//        set3Reps.add(3)
+//        set4Reps.add(3)
+//        set5Reps.add(3)
+//        set6Reps.add(3)
+//        set1Weight.add(25.toDouble())
+//        set2Weight.add(30.toDouble())
+//        set3Weight.add(35.toDouble())
+//        set4Weight.add(35.toDouble())
+//        set5Weight.add(35.toDouble())
+//        set6Weight.add(35.toDouble())
+
 
     }
 }
