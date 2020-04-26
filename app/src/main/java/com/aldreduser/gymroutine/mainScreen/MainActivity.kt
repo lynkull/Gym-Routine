@@ -3,12 +3,10 @@ package com.aldreduser.gymroutine.mainScreen
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aldreduser.gymroutine.R
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.extra_recycler_main_item.*
 
 //everything will be saved in sharedPreferences under the position in the recyclerview
 
@@ -43,7 +41,8 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
 
     //Shared Preferences Keys ("$position $key")
     private val NUMB_OF_WORKOUTS_SPK = "Number of workouts"
-    private val NUMB_OF_RECYCLER_VIEWS_SPK = "Workout names array"
+    private val NAMES_OF_WORKOUTS_SPK = "Workout names"
+    private val WORKOUT_SETS_SPK = "Workout Sets"   //to iterate through the sets when loading from storage
     private val SET_REPS_SPK = "Reps of set"        //"$position $SET_REPS_SPK $numOfSet"
     private val SET_WEIGHT_SPK = "Weight of set"
 
@@ -93,6 +92,7 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
     override fun onSaveClick(position: Int, workoutName: String, setReps: ArrayList<String>, setWeight: ArrayList<String>) {
         //all the data to be saved from the adapter is passed to here as parameters. Are saved under the position
         //todo: setReps.size and setWeight.size might be bugs, hopefully it starts at 1 and ends in setReps.size-1
+        //todo: pop up ask if user is sure they want to overrride the data
         val numbOfWorkoutsSP = this.getPreferences(Context.MODE_PRIVATE) ?: return
         with(numbOfWorkoutsSP.edit()) {
             putInt(NUMB_OF_WORKOUTS_SPK, numOfWorkouts)
@@ -100,7 +100,12 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
         }
         val workoutNameSP = this.getPreferences(Context.MODE_PRIVATE) ?: return
         with(workoutNameSP.edit()) {
-            putString("$position $NUMB_OF_RECYCLER_VIEWS_SPK", workoutName)
+            putString("$position $NAMES_OF_WORKOUTS_SPK", workoutName)
+            commit()
+        }
+        val workoutSets = this.getPreferences(Context.MODE_PRIVATE) ?: return
+        with(workoutSets.edit()) {
+            putInt("$position $WORKOUT_SETS_SPK", setReps.size)
             commit()
         }
         for (i in 0 until setReps.size) {
@@ -126,7 +131,7 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
 
     //load the saved data like this
     private fun loadRecyclersData() {
-        //todo: numOfWorkouts might be more than the workouts, ask if it exists when iterating to avoid a crash (or try catch block)
+        //todo: possible bug: numOfWorkouts might be more than the workouts, ask if it exists when iterating to avoid a crash (or try catch block)
 
         val numbOfWorkoutsSP = this.getPreferences(Context.MODE_PRIVATE) ?: return
         numOfWorkouts =  numbOfWorkoutsSP.getInt(NUMB_OF_WORKOUTS_SPK, 0)
@@ -134,14 +139,38 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
         for (i in 0 until  numOfWorkouts) {
             //todo: maybe put this in try catch
 
+            //get the saved name of the specific workout
             val workoutNameSP = this.getPreferences(Context.MODE_PRIVATE) ?: return
-            workoutNames.add(workoutNameSP.getString("$i $NUMB_OF_RECYCLER_VIEWS_SPK", "")!!)
+            val tempWorkoutName =  workoutNameSP.getString("$i $NAMES_OF_WORKOUTS_SPK", "")
+            if (tempWorkoutName!!.isNotEmpty()){ workoutNames.add(tempWorkoutName) }
+            //make a loop of the sets in that specific workout
+            val workoutSetsSP = this.getPreferences(Context.MODE_PRIVATE) ?: return
+            val tempWorkoutSets =  workoutSetsSP.getInt("$i $WORKOUT_SETS_SPK", 0)
+            for (set in 0 until tempWorkoutSets) {
+                //retrieve the set reps from the specific workout
+                //retrieve the set weight from the specific workout
 
-            //todo: fill the up with saved data and create a recycler item
+
+                val nestedSetRepsArray: ArrayList<String>
+                val nestedSetWeightArray: ArrayList<String>
+            }   
+
+
+
+
+            //todo: fill them up with saved data and create a recycler item
+
+            val setRepSP = this.getPreferences(Context.MODE_PRIVATE) ?: return
+            workoutNames.add(setRepSP.getString("$i $NAMES_OF_WORKOUTS_SPK", "")!!)
+
+            //set number and reps per set
             setRepsArray.add()
+            //set number and weight per set
             setWeightArray.add()
 
         }
+
+        //todo: wheb done, display the data, clear the arrays and add another recycler item
 
 
 
@@ -165,6 +194,3 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
 
     }
 }
-
-//val thisActSharedPref = this.getPreferences(Context.MODE_PRIVATE) ?: return
-//textBoxToSave.setText(thisActSharedPref.getString(prefFileName, ""))
