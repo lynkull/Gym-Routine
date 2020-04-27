@@ -51,8 +51,8 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
 
 // maybe put items in an arrayList inside another arrayList to make the code cleaner, to avoid so many variables
     //todo: send these to MainAdapter like it was sent to Adapter. Having an arrayList for each one was probably unnecessary
-    private var setRepsArray:ArrayList<ArrayList<Int>> = ArrayList()
-    private var setWeightArray:ArrayList<ArrayList<Double>> = ArrayList()
+    private var setRepsArray:ArrayList<ArrayList<String>> = ArrayList()
+    private var setWeightArray:ArrayList<ArrayList<String>> = ArrayList()
 //    private var set1Reps:ArrayList<Int> = ArrayList(); private var set1Weight:ArrayList<Double> = ArrayList()
 //    private var set2Reps:ArrayList<Int> = ArrayList(); private var set2Weight:ArrayList<Double> = ArrayList()
 //    private var set3Reps:ArrayList<Int> = ArrayList(); private var set3Weight:ArrayList<Double> = ArrayList()
@@ -64,7 +64,9 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        loadRecyclersData()
         makeRecycler()
+        // setRepsArray.clear(); setWeightArray.clear() //todo: check to see if this will not break the code
         addWorkoutButton.setOnClickListener {
             numOfWorkouts++
             makeRecycler()
@@ -73,20 +75,9 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
 
     private fun makeRecycler() {
         //addRecyclerData()
-        val adapter = MainAdapter(this, numOfWorkouts, this)
+        val adapter = MainAdapter(this, numOfWorkouts, this, setRepsArray, setWeightArray)
         mainRecyclerView.layoutManager = LinearLayoutManager(this)
         mainRecyclerView.adapter = adapter
-
-//        val adapter = Adapter(this, workoutName, set1Reps, set1Weight, set2Reps, set2Weight,
-//            set3Reps, set3Weight, set4Reps, set4Weight, set5Reps, set5Weight, set6Reps, set6Weight,
-//            object: Adapter.OnItemClickListener {
-//                override fun onItemClick(view: View?, position: Int) {
-//                    // list item was clicked
-//                }
-//            }
-//        )
-//        mainRecyclerView.layoutManager = LinearLayoutManager(this)
-//        mainRecyclerView.adapter = adapter
     }
     //handle recycler items click events here
     override fun onSaveClick(position: Int, workoutName: String, setReps: ArrayList<String>, setWeight: ArrayList<String>) {
@@ -136,8 +127,11 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
         val numbOfWorkoutsSP = this.getPreferences(Context.MODE_PRIVATE) ?: return
         numOfWorkouts =  numbOfWorkoutsSP.getInt(NUMB_OF_WORKOUTS_SPK, 0)
 
-        for (i in 0 until  numOfWorkouts) {
-            //todo: maybe put this in try catch
+        for (i in 0 until numOfWorkouts) {
+            //maybe put this in try catch
+
+            val nestedSetRepsArray: ArrayList<String> = ArrayList()
+            val nestedSetWeightArray: ArrayList<String> = ArrayList()
 
             //get the saved name of the specific workout
             val workoutNameSP = this.getPreferences(Context.MODE_PRIVATE) ?: return
@@ -147,50 +141,21 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
             val workoutSetsSP = this.getPreferences(Context.MODE_PRIVATE) ?: return
             val tempWorkoutSets =  workoutSetsSP.getInt("$i $WORKOUT_SETS_SPK", 0)
             for (set in 0 until tempWorkoutSets) {
-                //retrieve the set reps from the specific workout
-                //retrieve the set weight from the specific workout
+                //add the set reps from the specific workout to nestedSetRepsArray
+                val workoutRepsSP = this.getPreferences(Context.MODE_PRIVATE) ?: return
+                val tempWorkoutReps =  workoutRepsSP.getString("$i $SET_REPS_SPK $set", "")
+                if(tempWorkoutReps!!.isNotEmpty()){ nestedSetRepsArray.add(tempWorkoutReps) }
 
+                //add the set weight from the specific workout to nestedSetWeightArray
+                val workoutWeightSP = this.getPreferences(Context.MODE_PRIVATE) ?: return
+                val tempWorkoutWeight =  workoutWeightSP.getString("$i $SET_REPS_SPK $set", "")
+                if(tempWorkoutWeight!!.isNotEmpty()){ nestedSetWeightArray.add(tempWorkoutWeight) }
+            }
+            //add the reps and weight of sets in each workout to the array where the rest of the workouts are
+            setRepsArray.add(nestedSetRepsArray)
+            setWeightArray.add(nestedSetWeightArray)
 
-                val nestedSetRepsArray: ArrayList<String>
-                val nestedSetWeightArray: ArrayList<String>
-            }   
-
-
-
-
-            //todo: fill them up with saved data and create a recycler item
-
-            val setRepSP = this.getPreferences(Context.MODE_PRIVATE) ?: return
-            workoutNames.add(setRepSP.getString("$i $NAMES_OF_WORKOUTS_SPK", "")!!)
-
-            //set number and reps per set
-            setRepsArray.add()
-            //set number and weight per set
-            setWeightArray.add()
-
+            //todo: send the arrays to the MainAdapter
         }
-
-        //todo: wheb done, display the data, clear the arrays and add another recycler item
-
-
-
-
-
-//        addSetButton.setOnClickListener { set4Line.visibility = View.VISIBLE }
-//        workoutName.add("Incline Dumbbell")
-//        set1Reps.add(3)
-//        set2Reps.add(3)
-//        set3Reps.add(3)
-//        set4Reps.add(3)
-//        set5Reps.add(3)
-//        set6Reps.add(3)
-//        set1Weight.add(25.toDouble())
-//        set2Weight.add(30.toDouble())
-//        set3Weight.add(35.toDouble())
-//        set4Weight.add(35.toDouble())
-//        set5Weight.add(35.toDouble())
-//        set6Weight.add(35.toDouble())
-
-
     }
 }

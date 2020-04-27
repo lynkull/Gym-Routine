@@ -21,13 +21,18 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     private static final String TAG = "MainAdapter";
     private Integer numOfWorkouts;
     private Context activityContext;
-    private ArrayList<String> setReps, setWeight; //this will be used to send data to the Activity to save it
     private String workoutName;
+    private ArrayList<String> setReps, setWeight; //this will be used to send data to the Activity to save it  //todo: get rid of this, it will be replaced by the line below
+    private ArrayList<ArrayList<String>> setRepsArray, setWeightArray;
+    private ArrayList<String> workoutNames; //this is used to load the names
 
-    public MainAdapter (Context activityContext, Integer numOfWorkouts, OnSaveButListener onSaveButListener) {
+    public MainAdapter (Context activityContext, Integer numOfWorkouts, OnSaveButListener onSaveButListener,
+                        ArrayList<ArrayList<String>> setRepsArray, ArrayList<ArrayList<String>> setWeightArray) {
         this.activityContext = activityContext;
         this.numOfWorkouts = numOfWorkouts;
         this.mOnSaveButListener = onSaveButListener;
+        this.setRepsArray = setRepsArray;
+        this.setWeightArray = setWeightArray;
     }
 
     @NonNull
@@ -42,6 +47,37 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull MainAdapter.ViewHolder holder, int position) {
         // what happens to each widget
         Log.d(TAG, "onBindViewHolder: called.");
+
+        //load items from storage (o could probably do this in viewHolder but its probably more resource efficient here)
+        //holder.itemView.specificWorkoutText  todo: title ,i forgot to do the title and pass it here
+
+        TextView specificWorkoutText = holder.itemView.findViewById(R.id.specificWorkoutText);
+        //reps and weights widgets, to write and save data
+        EditText set1RepsText = holder.itemView.findViewById(R.id.set1RepsText),
+        set2RepsText = holder.itemView.findViewById(R.id.set2RepsText),
+        set3RepsText = holder.itemView.findViewById(R.id.set3RepsText),
+        set4RepsText = holder.itemView.findViewById(R.id.set4RepsText),
+        set5RepsText = holder.itemView.findViewById(R.id.set5RepsText),
+        set6RepsText = holder.itemView.findViewById(R.id.set6RepsText),
+        set1WeightText = holder.itemView.findViewById(R.id.set1WeightText),
+        set2WeightText = holder.itemView.findViewById(R.id.set2WeightText),
+        set3WeightText = holder.itemView.findViewById(R.id.set3WeightText),
+        set4WeightText = holder.itemView.findViewById(R.id.set4WeightText),
+        set5WeightText = holder.itemView.findViewById(R.id.set5WeightText),
+        set6WeightText = holder.itemView.findViewById(R.id.set6WeightText);
+
+        //fill the title
+        specificWorkoutText.setText();
+        //fill the reps
+        set1RepsText.setText(setRepsArray);
+        //fill the weight
+        set1WeightText.setText(setWeightArray);
+
+
+
+
+
+
     }
 
     @Override
@@ -99,7 +135,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                     } else if (set6Line.getVisibility() == View.GONE){
                         set6Line.setVisibility(View.VISIBLE);
                     } else {
-                        //todo: the toast might not work bc of the context being passed
+                        //todo: possible bug: the toast might not work bc of the context being passed
                         Toast toast = Toast.makeText(activityContext, "Maximum sets reached.", Toast.LENGTH_SHORT);
                         toast.show();
                     }
@@ -135,7 +171,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
         @Override
         public void onClick(View v) {
-            //todo: pass all the other parameters through here too
             onSaveButListener.onSaveClick(getAdapterPosition(), workoutName, setReps, setWeight);
         }
     }
@@ -144,4 +179,3 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         void onSaveClick(int position, String workoutName, ArrayList<String> setReps, ArrayList<String> setWeight);
     }
 }
-//todo: i think the full arrays are being sent, just need to recieve them and save them in MainActivity
