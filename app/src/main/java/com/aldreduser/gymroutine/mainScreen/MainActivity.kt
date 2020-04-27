@@ -50,15 +50,8 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
     private var numOfWorkouts: Int = 0      // will be used to determine count of recycler items and to load saved data
 
 // maybe put items in an arrayList inside another arrayList to make the code cleaner, to avoid so many variables
-    //todo: send these to MainAdapter like it was sent to Adapter. Having an arrayList for each one was probably unnecessary
     private var setRepsArray:ArrayList<ArrayList<String>> = ArrayList()
     private var setWeightArray:ArrayList<ArrayList<String>> = ArrayList()
-//    private var set1Reps:ArrayList<Int> = ArrayList(); private var set1Weight:ArrayList<Double> = ArrayList()
-//    private var set2Reps:ArrayList<Int> = ArrayList(); private var set2Weight:ArrayList<Double> = ArrayList()
-//    private var set3Reps:ArrayList<Int> = ArrayList(); private var set3Weight:ArrayList<Double> = ArrayList()
-//    private var set4Reps:ArrayList<Int> = ArrayList(); private var set4Weight:ArrayList<Double> = ArrayList()
-//    private var set5Reps:ArrayList<Int> = ArrayList(); private var set5Weight:ArrayList<Double> = ArrayList()
-//    private var set6Reps:ArrayList<Int> = ArrayList(); private var set6Weight:ArrayList<Double> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,7 +59,7 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
 
         loadRecyclersData()
         makeRecycler()
-        // setRepsArray.clear(); setWeightArray.clear() //todo: check to see if this will not break the code
+        // setRepsArray.clear(); setWeightArray.clear() //todo: check to see if adding this in will not break the code
         addWorkoutButton.setOnClickListener {
             numOfWorkouts++
             makeRecycler()
@@ -75,14 +68,14 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
 
     private fun makeRecycler() {
         //addRecyclerData()
-        val adapter = MainAdapter(this, numOfWorkouts, this, setRepsArray, setWeightArray)
+        val adapter = MainAdapter(this, numOfWorkouts, this, setRepsArray, setWeightArray, workoutNames)
         mainRecyclerView.layoutManager = LinearLayoutManager(this)
         mainRecyclerView.adapter = adapter
     }
     //handle recycler items click events here
     override fun onSaveClick(position: Int, workoutName: String, setReps: ArrayList<String>, setWeight: ArrayList<String>) {
         //all the data to be saved from the adapter is passed to here as parameters. Are saved under the position
-        //todo: setReps.size and setWeight.size might be bugs, hopefully it starts at 1 and ends in setReps.size-1
+        //todo: possible bugs: setReps.size and setWeight.size might be bugs, hopefully it starts at 1 and ends in setReps.size-1
         //todo: pop up ask if user is sure they want to overrride the data
         val numbOfWorkoutsSP = this.getPreferences(Context.MODE_PRIVATE) ?: return
         with(numbOfWorkoutsSP.edit()) {
@@ -154,8 +147,7 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
             //add the reps and weight of sets in each workout to the array where the rest of the workouts are
             setRepsArray.add(nestedSetRepsArray)
             setWeightArray.add(nestedSetWeightArray)
-
-            //todo: send the arrays to the MainAdapter
         }
     }
 }
+//todo: i think its done, test the code
