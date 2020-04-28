@@ -67,22 +67,24 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         set5WeightText = holder.itemView.findViewById(R.id.set5WeightText),
         set6WeightText = holder.itemView.findViewById(R.id.set6WeightText);
 
-        //fill the title
-        specificWorkoutText.setText(workoutNames.get(position));
-        //fill the reps
-        set1RepsText.setText(setRepsArray.get(0).toString());
-        set2RepsText.setText(setRepsArray.get(1).toString());
-        set3RepsText.setText(setRepsArray.get(2).toString());
-        set4RepsText.setText(setRepsArray.get(3).toString());
-        set5RepsText.setText(setRepsArray.get(4).toString());
-        set6RepsText.setText(setRepsArray.get(5).toString());
-        //fill the weight
-        set1WeightText.setText(setWeightArray.get(0).toString());
-        set2WeightText.setText(setWeightArray.get(1).toString());
-        set3WeightText.setText(setWeightArray.get(2).toString());
-        set4WeightText.setText(setWeightArray.get(3).toString());
-        set5WeightText.setText(setWeightArray.get(4).toString());
-        set6WeightText.setText(setWeightArray.get(5).toString());
+        try {
+            //fill the title
+            specificWorkoutText.setText(workoutNames.get(position));
+            //fill the reps
+            set1RepsText.setText(setRepsArray.get(0).toString());
+            set2RepsText.setText(setRepsArray.get(1).toString());
+            set3RepsText.setText(setRepsArray.get(2).toString());
+            set4RepsText.setText(setRepsArray.get(3).toString());
+            set5RepsText.setText(setRepsArray.get(4).toString());
+            set6RepsText.setText(setRepsArray.get(5).toString());
+            //fill the weight
+            set1WeightText.setText(setWeightArray.get(0).toString());
+            set2WeightText.setText(setWeightArray.get(1).toString());
+            set3WeightText.setText(setWeightArray.get(2).toString());
+            set4WeightText.setText(setWeightArray.get(3).toString());
+            set5WeightText.setText(setWeightArray.get(4).toString());
+            set6WeightText.setText(setWeightArray.get(5).toString());
+        } catch (IndexOutOfBoundsException e) {System.out.println("No data to load.");}
 //        for (int i=0; i<setRepsArray.size(); i++) {
 //              i don't think I need this loop anymore}
     }

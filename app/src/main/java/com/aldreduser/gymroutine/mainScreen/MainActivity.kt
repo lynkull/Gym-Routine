@@ -151,3 +151,5 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
     }
 }
 //todo: i think its done, test the code
+//bug: maybe in onCreateViewHolder or viewHolder classes
+//because bc it's trying to load something that doesnt exist, probably not this bc the loading already happens, crashes when button is clicked
