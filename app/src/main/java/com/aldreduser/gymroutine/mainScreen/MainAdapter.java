@@ -158,7 +158,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                     putUserInputInArrays();
                 }
             });
-            itemView.setOnClickListener(this);
+            //itemView.setOnClickListener(this);  //bug: i think the problem is here, maybe delete. UPDATE: works for now
         }
 
         private void putUserInputInArrays() {

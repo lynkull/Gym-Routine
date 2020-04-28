@@ -174,16 +174,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:inputType="number"
-                android:text="Reps" />
+                android:inputType="number"/>
 
             <EditText
                 android:id="@+id/set4WeightText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:inputType="numberDecimal"
-                android:text="Weight" />
+                android:inputType="numberDecimal" />
         </LinearLayout>
 
         <LinearLayout
@@ -208,16 +206,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:inputType="number"
-                android:text="Reps" />
+                android:inputType="number"/>
 
             <EditText
                 android:id="@+id/set5WeightText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:inputType="numberDecimal"
-                android:text="Weight" />
+                android:inputType="numberDecimal"/>
         </LinearLayout>
 
         <LinearLayout
@@ -242,16 +238,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:inputType="number"
-                android:text="Reps" />
+                android:inputType="number" />
 
             <EditText
                 android:id="@+id/set6WeightText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:inputType="numberDecimal"
-                android:text="Weight" />
+                android:inputType="numberDecimal"/>
         </LinearLayout>
 
         <LinearLayout
