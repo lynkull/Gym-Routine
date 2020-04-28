@@ -1,6 +1,7 @@
 package com.aldreduser.gymroutine.mainScreen;
 
 import android.content.Context;
+import android.renderscript.ScriptIntrinsicYuvToRGB;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,7 +23,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     private Integer numOfWorkouts;
     private Context activityContext;
     private String workoutName;
-    private ArrayList<String> setReps, setWeight; //this will be used to send data to the Activity to save it
+    private ArrayList<String> setReps = new ArrayList<>(), setWeight = new ArrayList<>(); //this will be used to send data to the Activity to save it
     private ArrayList<ArrayList<String>> setRepsArray, setWeightArray;
     private ArrayList<String>workoutNames; //this is used to load the names
 
@@ -156,6 +157,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                 @Override
                 public void onClick(View v) {
                     putUserInputInArrays();
+                    //todo: make save toast here
                 }
             });
             //itemView.setOnClickListener(this);  //bug: i think the problem is here, maybe delete. UPDATE: works for now
@@ -163,18 +165,18 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
         private void putUserInputInArrays() {
             workoutName = specificWorkoutText.getText().toString();
-            setReps.add(set1RepsText.toString());
-            setReps.add(set2RepsText.toString());
-            setReps.add(set3RepsText.toString());
-            setReps.add(set4RepsText.toString());
-            setReps.add(set5RepsText.toString());
-            setReps.add(set6RepsText.toString());
-            setWeight.add(set1WeightText.toString());
-            setWeight.add(set2WeightText.toString());
-            setWeight.add(set3WeightText.toString());
-            setWeight.add(set4WeightText.toString());
-            setWeight.add(set5WeightText.toString());
-            setWeight.add(set6WeightText.toString());
+            setReps.add(set1RepsText.getText().toString());
+            setReps.add(set2RepsText.getText().toString());
+            setReps.add(set3RepsText.getText().toString());
+            setReps.add(set4RepsText.getText().toString());
+            setReps.add(set5RepsText.getText().toString());
+            setReps.add(set6RepsText.getText().toString());
+            setWeight.add(set1WeightText.getText().toString());
+            setWeight.add(set2WeightText.getText().toString());
+            setWeight.add(set3WeightText.getText().toString());
+            setWeight.add(set4WeightText.getText().toString());
+            setWeight.add(set5WeightText.getText().toString());
+            setWeight.add(set6WeightText.getText().toString());
         }
 
         @Override
