@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -53,7 +52,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         //load items from storage (o could probably do this in viewHolder but its probably more resource efficient here)
         //holder.itemView.specificWorkoutText  todo: title ,i forgot to do the title and pass it here
 
-        TextView specificWorkoutText = holder.itemView.findViewById(R.id.specificWorkoutText);
+        EditText specificWorkoutText = holder.itemView.findViewById(R.id.specificWorkoutText);
         //reps and weights widgets, to write and save data
         EditText set1RepsText = holder.itemView.findViewById(R.id.set1RepsText),
         set2RepsText = holder.itemView.findViewById(R.id.set2RepsText),
@@ -102,7 +101,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         //click listener to senc to activity that will handle this event
         OnSaveButListener onSaveButListener;
         //all the widgets are declared here
-        TextView specificWorkoutText;
+        EditText specificWorkoutText;
         EditText set1RepsText, set2RepsText, set3RepsText, set4RepsText, set5RepsText, set6RepsText;
         EditText set1WeightText, set2WeightText, set3WeightText, set4WeightText, set5WeightText, set6WeightText;
         LinearLayout set4Line, set5Line, set6Line;
@@ -111,6 +110,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         public ViewHolder(@NonNull View itemView, OnSaveButListener onSaveButListener) {
             super(itemView);
             this.onSaveButListener = onSaveButListener;
+            Toast toast = Toast.makeText(activityContext, "this happened", Toast.LENGTH_SHORT);
 
             specificWorkoutText = itemView.findViewById(R.id.specificWorkoutText);
             //reps and weights widgets, to write and save data
@@ -151,16 +151,31 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                     }
                 }
             });
-            //todo: get the data in each input box and save them in shared preference in MainActivity, then in SQLite
-            // have to fill both arrays with values 'setReps', 'setWeigh'
-            saveButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    putUserInputInArrays();
-                    //todo: make save toast here
-                }
-            });
-            //itemView.setOnClickListener(this);  //bug: i think the problem is here, maybe delete. UPDATE: works for now
+
+
+
+
+
+
+
+
+            //gets the data in each input box and saves it in shared preference in MainActivity, then in SQLite
+            saveButton.setOnClickListener(this);
+//            saveButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    putUserInputInArrays();
+//                    //todo: bug: the code is not saving bc the save code in MainActivity is not being called
+//                }
+//            });
+
+
+
+
+
+
+
+
         }
 
         private void putUserInputInArrays() {
@@ -181,11 +196,12 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
         @Override
         public void onClick(View v) {
+            putUserInputInArrays();
             onSaveButListener.onSaveClick(getAdapterPosition(), workoutName, setReps, setWeight);
         }
     }
     public interface OnSaveButListener {
-        //this interface was made so that the activity class can handle onclicklisteners from here
+        //this interface was made so that the activity class can handle onClickListeners from here
         void onSaveClick(int position, String workoutName, ArrayList<String> setReps, ArrayList<String> setWeight);
     }
 }

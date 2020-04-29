@@ -3,6 +3,7 @@ package com.aldreduser.gymroutine.mainScreen
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.method.TextKeyListener.clear
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aldreduser.gymroutine.R
@@ -57,6 +58,9 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+//        val otherOrdersSP = this.getPreferences(Context.MODE_PRIVATE) ?: return
+//        otherOrdersSP.edit().clear().commit()  //remember to delete this
+
         loadRecyclersData()
         makeRecycler()
         // setRepsArray.clear(); setWeightArray.clear() //todo: check to see if adding this in will not break the code
@@ -74,6 +78,7 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
     }
     //handle recycler items click events here
     override fun onSaveClick(position: Int, workoutName: String, setReps: ArrayList<String>, setWeight: ArrayList<String>) {
+
         //all the data to be saved from the adapter is passed to here as parameters. Are saved under the position
         //todo: possible bugs: setReps.size and setWeight.size might be bugs, hopefully it starts at 1 and ends in setReps.size-1
         //todo: pop up ask if user is sure they want to overrride the data
@@ -150,6 +155,5 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
         }
     }
 }
-//todo: i think its done, test the code
-//bug: maybe in onCreateViewHolder or viewHolder classes
-//because bc it's trying to load something that doesnt exist, probably not this bc the loading already happens, crashes when button is clicked
+//todo: i think data is saving but not loading. Take user input for workout name and go from there
+// that'll give it a workoutName when saving. Check if this is the reason

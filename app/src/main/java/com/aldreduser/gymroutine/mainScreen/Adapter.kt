@@ -70,7 +70,7 @@ class Adapter(val nContext: Context,
 
     override fun onBindViewHolder(holder: viewHolder, position: Int) {
 
-        holder.itemView.specificWorkoutText.text = specificWorkout.get(position)
+        //holder.itemView.specificWorkoutText.text = specificWorkout.get(position)
         holder.itemView.set1RepsText.setText(set1Reps.get(position).toString())
         holder.itemView.set1WeightText.setText(set1Weight.get(position).toString()) //make widgets take decimals in the layout
         holder.itemView.set2RepsText.setText(set2Reps.get(position).toString())

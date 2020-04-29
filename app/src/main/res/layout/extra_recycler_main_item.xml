@@ -14,13 +14,13 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
+        <EditText
             android:id="@+id/specificWorkoutText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:layout_marginBottom="8dp"
-            android:text="Specific Workout"
+            android:hint="workout name"
             android:textColor="#000000"
             android:textSize="30sp"
             android:textStyle="bold" />
