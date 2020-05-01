@@ -49,9 +49,9 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         Log.d(TAG, "onBindViewHolder: called.");
 
         //I could probably load items from storage in viewHolder but its probably more resource efficient here)
-        EditText specificWorkoutText = holder.itemView.findViewById(R.id.specificWorkoutText);
-        //reps and weights widgets, to write and save data
-        EditText set1RepsText = holder.itemView.findViewById(R.id.set1RepsText),
+        //Title, reps and weights widgets, to write and save data
+        EditText specificWorkoutText = holder.itemView.findViewById(R.id.specificWorkoutText),
+        set1RepsText = holder.itemView.findViewById(R.id.set1RepsText),
         set2RepsText = holder.itemView.findViewById(R.id.set2RepsText),
         set3RepsText = holder.itemView.findViewById(R.id.set3RepsText),
         set4RepsText = holder.itemView.findViewById(R.id.set4RepsText),
@@ -67,21 +67,22 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
             //fill the title
             specificWorkoutText.setText(workoutNames.get(position));
             //fill the reps
-            //todo: i think the problem is here (with an arraylist inside an array list)
-            set1RepsText.setText(setRepsArray.get(0).toString());
-            set2RepsText.setText(setRepsArray.get(1).toString());
-            set3RepsText.setText(setRepsArray.get(2).toString());
-            set4RepsText.setText(setRepsArray.get(3).toString());
-            set5RepsText.setText(setRepsArray.get(4).toString());
-            set6RepsText.setText(setRepsArray.get(5).toString());
+            //todo: i think the problem is here (with the nested arrayLists)
+            // use position
+            set1RepsText.setText(setRepsArray.get(position).get(0));
+            set2RepsText.setText(setRepsArray.get(position).get(1));
+            set3RepsText.setText(setRepsArray.get(position).get(2));
+            set4RepsText.setText(setRepsArray.get(position).get(3));
+            set5RepsText.setText(setRepsArray.get(position).get(4));
+            set6RepsText.setText(setRepsArray.get(position).get(5));
             //fill the weight
-            set1WeightText.setText(setWeightArray.get(0).toString());
-            set2WeightText.setText(setWeightArray.get(1).toString());
-            set3WeightText.setText(setWeightArray.get(2).toString());
-            set4WeightText.setText(setWeightArray.get(3).toString());
-            set5WeightText.setText(setWeightArray.get(4).toString());
-            set6WeightText.setText(setWeightArray.get(5).toString());
-        } catch (IndexOutOfBoundsException e) {System.out.println("No data to load.");}
+            set1WeightText.setText(setWeightArray.get(position).get(0));
+            set2WeightText.setText(setWeightArray.get(position).get(1));
+            set3WeightText.setText(setWeightArray.get(position).get(2));
+            set4WeightText.setText(setWeightArray.get(position).get(3));
+            set5WeightText.setText(setWeightArray.get(position).get(4));
+            set6WeightText.setText(setWeightArray.get(position).get(5));
+        } catch (IndexOutOfBoundsException e) {Log.d(TAG, "error: Probably no data to load.");}
     }
 
     @Override
@@ -105,7 +106,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         public ViewHolder(@NonNull View itemView, OnSaveButListener onSaveButListener) {
             super(itemView);
             this.onSaveButListener = onSaveButListener;
-            Toast toast = Toast.makeText(activityContext, "this happened", Toast.LENGTH_SHORT);
 
             specificWorkoutText = itemView.findViewById(R.id.specificWorkoutText);
             //reps and weights widgets, to write and save data
