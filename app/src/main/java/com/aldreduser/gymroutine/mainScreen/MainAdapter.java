@@ -1,7 +1,6 @@
 package com.aldreduser.gymroutine.mainScreen;
 
 import android.content.Context;
-import android.renderscript.ScriptIntrinsicYuvToRGB;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,9 +48,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         // what happens to each widget
         Log.d(TAG, "onBindViewHolder: called.");
 
-        //load items from storage (o could probably do this in viewHolder but its probably more resource efficient here)
-        //holder.itemView.specificWorkoutText  todo: title ,i forgot to do the title and pass it here
-
+        //I could probably load items from storage in viewHolder but its probably more resource efficient here)
         EditText specificWorkoutText = holder.itemView.findViewById(R.id.specificWorkoutText);
         //reps and weights widgets, to write and save data
         EditText set1RepsText = holder.itemView.findViewById(R.id.set1RepsText),
@@ -66,11 +63,11 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
         set4WeightText = holder.itemView.findViewById(R.id.set4WeightText),
         set5WeightText = holder.itemView.findViewById(R.id.set5WeightText),
         set6WeightText = holder.itemView.findViewById(R.id.set6WeightText);
-
         try {
             //fill the title
             specificWorkoutText.setText(workoutNames.get(position));
             //fill the reps
+            //todo: i think the problem is here (with an arraylist inside an array list)
             set1RepsText.setText(setRepsArray.get(0).toString());
             set2RepsText.setText(setRepsArray.get(1).toString());
             set3RepsText.setText(setRepsArray.get(2).toString());
@@ -85,8 +82,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
             set5WeightText.setText(setWeightArray.get(4).toString());
             set6WeightText.setText(setWeightArray.get(5).toString());
         } catch (IndexOutOfBoundsException e) {System.out.println("No data to load.");}
-//        for (int i=0; i<setRepsArray.size(); i++) {
-//              i don't think I need this loop anymore}
     }
 
     @Override
@@ -152,30 +147,8 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                 }
             });
 
-
-
-
-
-
-
-
             //gets the data in each input box and saves it in shared preference in MainActivity, then in SQLite
             saveButton.setOnClickListener(this);
-//            saveButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    putUserInputInArrays();
-//                    //todo: bug: the code is not saving bc the save code in MainActivity is not being called
-//                }
-//            });
-
-
-
-
-
-
-
-
         }
 
         private void putUserInputInArrays() {

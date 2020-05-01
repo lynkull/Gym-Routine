@@ -3,39 +3,35 @@ package com.aldreduser.gymroutine.mainScreen
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.method.TextKeyListener.clear
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aldreduser.gymroutine.R
 import kotlinx.android.synthetic.main.activity_main.*
 
-//everything will be saved in sharedPreferences under the position in the recyclerview
-
 /** todo:
  * soon:
- * - when a new view is created, user has to input the name of the workout in a popup
- * - user can add workouts (might not work yet)
- * - store user input in boxes
  * - delete workout
  * - user will chose the set of workouts that are displayed (ie. legs, back, chest, etc)
- * - have a navigation bar to the left (says which workout day, nutrition, maxes)
+ *      - have a navigation bar to the left to do this
  * - play with top navigation bar
+ * - have the recyclerview be two columns instead of just one. (that way there's more info displayed)
  *
  * mid:
- * - have simple undo functionality after user input
+ * - save user input dynamically
  * - history of reps and weight (and in which set), maxes
  * - cardio section
- *
- * later:
- * - nutrition tracking section
- * - input body weight, calculate each nutrient needed
+ * - navigation bar says which workout day, nutrition, maxes
  *
  * maybe:
+ * - nutrition tracking section
+ * - input body weight. Calculate each nutrient needed
  * - probably have a table layout in each item
- * -maybe work with the calendar
- * -save user input dynamically
+ * - maybe work with the calendar
  */
 
+//todo: possible bug, the computer is getting really hot with the emulator using the app, maybe that's another bug
+
+//everything will be saved in sharedPreferences under the position in the recyclerview/**/
 //sets 4 and up are 'gone' by default (should be shown if the user has more than 3 sets in their workout)
 
 class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
@@ -50,7 +46,6 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
     private var workoutNames:ArrayList<String> = ArrayList()  //will be used to load saved data
     private var numOfWorkouts: Int = 0      // will be used to determine count of recycler items and to load saved data
 
-// maybe put items in an arrayList inside another arrayList to make the code cleaner, to avoid so many variables
     private var setRepsArray:ArrayList<ArrayList<String>> = ArrayList()
     private var setWeightArray:ArrayList<ArrayList<String>> = ArrayList()
 
@@ -59,7 +54,7 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
         setContentView(R.layout.activity_main)
 
 //        val otherOrdersSP = this.getPreferences(Context.MODE_PRIVATE) ?: return
-//        otherOrdersSP.edit().clear().commit()  //remember to delete this
+//        otherOrdersSP.edit().clear().commit()  //todo: remember to delete this
 
         loadRecyclersData()
         makeRecycler()
@@ -115,10 +110,10 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
                 commit()
             }
         }
-        Toast.makeText(this, "Saved", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show()
     }
 
-    //load the saved data like this
+    //load the saved data like this, put it in variables and send variables to adapter
     private fun loadRecyclersData() {
         //todo: possible bug: numOfWorkouts might be more than the workouts, ask if it exists when iterating to avoid a crash (or try catch block)
 
@@ -139,14 +134,15 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
             val workoutSetsSP = this.getPreferences(Context.MODE_PRIVATE) ?: return
             val tempWorkoutSets =  workoutSetsSP.getInt("$i $WORKOUT_SETS_SPK", 0)
             for (set in 0 until tempWorkoutSets) {
+                val numOfSet = set+1    //i saved it with +1, so now i have to do this.
                 //add the set reps from the specific workout to nestedSetRepsArray
                 val workoutRepsSP = this.getPreferences(Context.MODE_PRIVATE) ?: return
-                val tempWorkoutReps =  workoutRepsSP.getString("$i $SET_REPS_SPK $set", "")
+                val tempWorkoutReps =  workoutRepsSP.getString("$i $SET_REPS_SPK $numOfSet", "")
                 if(tempWorkoutReps!!.isNotEmpty()){ nestedSetRepsArray.add(tempWorkoutReps) }
 
                 //add the set weight from the specific workout to nestedSetWeightArray
                 val workoutWeightSP = this.getPreferences(Context.MODE_PRIVATE) ?: return
-                val tempWorkoutWeight =  workoutWeightSP.getString("$i $SET_REPS_SPK $set", "")
+                val tempWorkoutWeight =  workoutWeightSP.getString("$i $SET_REPS_SPK $numOfSet", "")
                 if(tempWorkoutWeight!!.isNotEmpty()){ nestedSetWeightArray.add(tempWorkoutWeight) }
             }
             //add the reps and weight of sets in each workout to the array where the rest of the workouts are
@@ -155,5 +151,3 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
         }
     }
 }
-//todo: i think data is saving but not loading. Take user input for workout name and go from there
-// that'll give it a workoutName when saving. Check if this is the reason

@@ -79,6 +79,7 @@
                 android:id="@+id/set1RepsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:layout_weight="1"
                 android:inputType="number" />
 
@@ -86,6 +87,7 @@
                 android:id="@+id/set1WeightText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:layout_weight="1"
                 android:inputType="numberDecimal" />
         </LinearLayout>
@@ -110,6 +112,7 @@
                 android:id="@+id/set2RepsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:layout_weight="1"
                 android:inputType="number" />
 
@@ -117,6 +120,7 @@
                 android:id="@+id/set2WeightText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:layout_weight="1"
                 android:inputType="numberDecimal" />
         </LinearLayout>
@@ -141,6 +145,7 @@
                 android:id="@+id/set3RepsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:layout_weight="1"
                 android:inputType="number" />
 
@@ -148,6 +153,7 @@
                 android:id="@+id/set3WeightText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:layout_weight="1"
                 android:inputType="numberDecimal" />
         </LinearLayout>
@@ -173,6 +179,7 @@
                 android:id="@+id/set4RepsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:layout_weight="1"
                 android:inputType="number"/>
 
@@ -180,6 +187,7 @@
                 android:id="@+id/set4WeightText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:layout_weight="1"
                 android:inputType="numberDecimal" />
         </LinearLayout>
@@ -205,6 +213,7 @@
                 android:id="@+id/set5RepsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:layout_weight="1"
                 android:inputType="number"/>
 
@@ -212,6 +221,7 @@
                 android:id="@+id/set5WeightText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:layout_weight="1"
                 android:inputType="numberDecimal"/>
         </LinearLayout>
@@ -237,6 +247,7 @@
                 android:id="@+id/set6RepsText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:layout_weight="1"
                 android:inputType="number" />
 
@@ -244,6 +255,7 @@
                 android:id="@+id/set6WeightText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 android:layout_weight="1"
                 android:inputType="numberDecimal"/>
         </LinearLayout>
