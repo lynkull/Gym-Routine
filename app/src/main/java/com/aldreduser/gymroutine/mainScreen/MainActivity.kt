@@ -10,7 +10,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 /** todo:
  * soon:
- * - delete workout
  * - user will chose the set of workouts that are displayed (ie. legs, back, chest, etc)
  *      - have a navigation bar to the left to do this
  * - play with top navigation bar
@@ -19,6 +18,7 @@ import kotlinx.android.synthetic.main.activity_main.*
  * mid:
  * - save user input dynamically
  * - history of reps and weight (and in which set), maxes
+ * - delete workout
  * - cardio section
  * - navigation bar says which workout day, nutrition, maxes
  *
@@ -142,7 +142,7 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
 
                 //add the set weight from the specific workout to nestedSetWeightArray
                 val workoutWeightSP = this.getPreferences(Context.MODE_PRIVATE) ?: return
-                val tempWorkoutWeight =  workoutWeightSP.getString("$i $SET_REPS_SPK $numOfSet", "")
+                val tempWorkoutWeight =  workoutWeightSP.getString("$i $SET_WEIGHT_SPK $numOfSet", "")
                 if(tempWorkoutWeight!!.isNotEmpty()){ nestedSetWeightArray.add(tempWorkoutWeight) }
             }
             //add the reps and weight of sets in each workout to the array where the rest of the workouts are

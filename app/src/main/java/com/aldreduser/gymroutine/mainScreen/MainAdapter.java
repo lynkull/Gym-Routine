@@ -128,7 +128,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
             // add set button. To add more set widgets
             addSetButton = itemView.findViewById(R.id.addSetButton);
             saveButton = itemView.findViewById(R.id.saveButton);
-
+            
             //onClickListeners go here
             //if this view is 'gone', make it 'visible'
             addSetButton.setOnClickListener(new View.OnClickListener() {
