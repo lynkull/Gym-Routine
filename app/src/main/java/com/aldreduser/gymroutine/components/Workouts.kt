@@ -1,7 +1,7 @@
 package com.aldreduser.gymroutine.components
 
 class Workouts {
-    // might not need this
+    //this was supposed to be an object class but i never used it
 
     //var workoutName = List<String>
 

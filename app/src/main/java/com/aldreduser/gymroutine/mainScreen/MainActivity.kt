@@ -4,9 +4,11 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aldreduser.gymroutine.R
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.toolbar.*
 
 /** todo:
  * soon:
@@ -29,7 +31,7 @@ import kotlinx.android.synthetic.main.activity_main.*
  * - maybe work with the calendar
  */
 
-//todo: possible bug, the computer is getting really hot with the emulator using the app, maybe that's another bug
+//todo: possible bug: input boxes sometimes has to be !null, otherwise data might not load correctly
 
 //everything will be saved in sharedPreferences under the position in the recyclerview/**/
 //sets 4 and up are 'gone' by default (should be shown if the user has more than 3 sets in their workout)
@@ -53,12 +55,11 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnSaveButListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        val otherOrdersSP = this.getPreferences(Context.MODE_PRIVATE) ?: return
-//        otherOrdersSP.edit().clear().commit()  //todo: remember to delete this
+        setSupportActionBar(mainActyToolbar as Toolbar?)
+        toolbar_title.text = "Workouts"
 
         loadRecyclersData()
         makeRecycler()
-        // setRepsArray.clear(); setWeightArray.clear() //todo: check to see if adding this in will not break the code
         addWorkoutButton.setOnClickListener {
             numOfWorkouts++
             makeRecycler()

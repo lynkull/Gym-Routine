@@ -67,8 +67,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
             //fill the title
             specificWorkoutText.setText(workoutNames.get(position));
             //fill the reps
-            //todo: i think the problem is here (with the nested arrayLists)
-            // use position
             set1RepsText.setText(setRepsArray.get(position).get(0));
             set2RepsText.setText(setRepsArray.get(position).get(1));
             set3RepsText.setText(setRepsArray.get(position).get(2));
@@ -128,7 +126,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
             // add set button. To add more set widgets
             addSetButton = itemView.findViewById(R.id.addSetButton);
             saveButton = itemView.findViewById(R.id.saveButton);
-            
+
             //onClickListeners go here
             //if this view is 'gone', make it 'visible'
             addSetButton.setOnClickListener(new View.OnClickListener() {
@@ -140,7 +138,6 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
                     } else if (set6Line.getVisibility() == View.GONE){
                         set6Line.setVisibility(View.VISIBLE);
                     } else {
-                        //todo: possible bug: the toast might not work bc of the context being passed
                         Toast toast = Toast.makeText(activityContext, "Maximum sets reached.", Toast.LENGTH_SHORT);
                         toast.show();
                     }
